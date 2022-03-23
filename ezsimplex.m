@@ -14,7 +14,7 @@ zcj = [zjcj; A];
 
 while (1)
 	zc = zjcj(:, 1:end -1)
-	if any(zc<0)
+	if any(zc < 0)
 		disp("Current BFS is not optimal");
 	
 		[Entval, pvt_col] = min(zc);
@@ -22,7 +22,7 @@ while (1)
 		col = A(:, pvt_col);
        if all(col < 0)
            disp("Unbounded")
-           break;
+           break; 
        else
             for i=1:size(A, 1)
                 if col(i)>0
