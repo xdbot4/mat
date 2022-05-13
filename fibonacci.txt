@@ -1,0 +1,24 @@
+n=input("Number of iteration");
+%a=fibonacci(n);
+%disp(a);
+f=@(x) x*(x-2);
+ l=0;
+ r=1.5;
+k=1;
+while k<n
+    m=fibonacci(n-k)/fibonacci(n-k+1);
+    x2=l+m*(r-l);
+    x1=r+l-x2;
+    if f(x1)<f(x2)
+        r=x2;
+        l=l;
+    elseif f(x1)>=f(x2)
+        l=x1;
+        r=r;
+   
+    end
+    k=k+1;
+    
+end
+p=(l+r)/2;
+disp(f(p));
