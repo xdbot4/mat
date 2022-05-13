@@ -1,0 +1,47 @@
+A = [-1 -3; -1 -1];
+b = [-3; -2];
+I=eye(2);
+cost = [-3 -5 0 0 0];
+A=[A I b];
+
+bv=[3 4];
+zjcj=cost(bv)*A-cost;
+while(1)
+    A
+    disp(abs(zjcj(end)))
+    sol = A(:,end);
+if any (sol<0) 
+    [Leaving, pvt_row] = min(sol);
+    row = A(pvt_row,1:end-1);
+    ZJ = zjcj(:,1:end-1);
+    for i=1:size(row,2)
+        if row(i)<0
+            ratio(i) = abs(ZJ(i)./row(i));
+        else
+            ratio(i) = inf;
+        end
+    end
+    [min_val, Pvt_col] = min(ratio);
+    bv(pvt_row) = Pvt_col;
+    pvt_var = A(pvt_row,Pvt_col);
+    A(pvt_row,:) = A(pvt_row,:)./pvt_var;
+    for i=1:size(A, 1)
+        if i~=pvt_row 
+            A (i, :) = A (i,:)-A(i,Pvt_col).*A(pvt_row,:);
+        end
+    end
+    zjcj = cost(bv)*A - cost;
+    else
+        disp("feasible and optimal ")
+        disp('Final solution')
+        disp(sol)
+        break;
+    end
+end
+    
+        
+
+        
+        
+
+

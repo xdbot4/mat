@@ -1,0 +1,33 @@
+cost = [2,10,4,5;6,12,8,11;3,9,5,7];
+A = [12,25,20];
+B = [25,10,15,5];
+if sum(A) < sum(B)
+    cost(end + 1, :) = zeros(1, size(A, 2));
+    A(end+1) = sum(B) - sum(A);
+else
+    cost(:, end + 1) = zeros(1, size(A, 2));
+    B(end+1) = sum(A) - sum(B);
+end
+
+costcopy = cost;
+X = zeros(size(cost));
+[m, n] = size(cost);
+BFS = m+n-1;
+
+for i=1:size(cost, 1)
+    for j=1:size(cost, 2)
+        hh = min(cost(:));
+        [row_index, col_index] = find(hh==cost);
+        x11 = min(A(row_index), B(col_index));
+        [val, ind] = max(x11);
+        ii = row_index(ind);
+        jj = col_index(ind);
+        y11 = min(A(ii), B(jj));
+        X(ii, jj) = y11;
+        A(ii) = A(ii) - y11;
+        B(jj) = B(jj) - y11;
+        cost(ii, jj) = Inf;
+    end
+end
+disp('Total cost = ')
+disp(sum(sum(costcopy .* X)))
